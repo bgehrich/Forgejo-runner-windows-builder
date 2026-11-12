@@ -37,11 +37,9 @@ jobs:
           - architecture: arm64
             os: windows-11-arm
     steps:
-      - uses: actions/checkout@v6
-        with:
-          github-server-url: https://code.forgejo.org
-          repository: ${{ inputs.goal == 'test-fork' && vars.TEST_FORK || 'forgejo/runner' }}
-          ref: ${{ inputs.tag }}
+      - name: Checkout code
+        run: |
+          git clone --depth 1 --branch ${{ inputs.tag }} https://code.forgejo.org/forgejo/runner.git .
 
       - name: Build for ${{ matrix.architecture }}
         run: |
